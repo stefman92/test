@@ -1,0 +1,31 @@
+#!/bin/sh
+
+#load the kernel module btrfs
+modprobe btrfs
+#load the kernel module loop for loopback devices
+modprobe loop
+
+#creates a virtual file system with a size of ~ 495MB
+dd if=/dev/zero of=/virtualfs bs=1024 count=500720
+
+i=0
+
+while [ $i -le 7 ]
+do
+
+	losetup /dev/loop$i /virtualfs
+
+
+	if [ $? = 0 ]
+	then
+		mkfs.btrfs /dev/loop$i 
+		mkdir /mnt/vfs
+		mount -t btrfs /dev/loop$i /mnt/vfs
+		break
+	else 
+		echo "error can't create device on loop$i... try another loop"
+	fi
+i=$(( i+1 ))
+
+done
+
