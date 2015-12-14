@@ -24,6 +24,7 @@ do
 		break
 	else 
 		echo "error can't create device on loop$i... try another loop"
+		echo "FAIL"
 	fi
 i=$(( i+1 ))
 
