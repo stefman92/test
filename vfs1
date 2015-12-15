@@ -14,7 +14,7 @@ while [ $i -le 7 ]
 do
 
 	losetup /dev/loop$i /virtualfs
-
+sdfdsfds
 
 	if [ $? = 0 ]
 	then
